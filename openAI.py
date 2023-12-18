@@ -8,7 +8,7 @@ client = OpenAI(
     api_key=creds.API_KEY
 )
 
-def chat_with_DNA(prompt, speakRate=200, streaming=False):
+def chat_with_DNA(prompt, speakRate=200, returning=False, streaming=False):
 
     ASSISTANT_NAME = "Mr. DNA"
     
@@ -48,5 +48,12 @@ def chat_with_DNA(prompt, speakRate=200, streaming=False):
             model="gpt-3.5-turbo",
         )
         result = response.choices[0].message.content.strip()
-        print(f"{ASSISTANT_NAME}: ", result)
-        textToSpeech.say(result, speakRate)
+
+        if returning == True:
+            print(f"{ASSISTANT_NAME}: ", result)
+            textToSpeech.say(result, speakRate)
+            return result
+
+        else:
+            print(f"{ASSISTANT_NAME}: ", result)
+            textToSpeech.say(result, speakRate)

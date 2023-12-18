@@ -3,9 +3,21 @@ import creds
 import textToSpeech
 import openAI
 
+
+def handle_input(text, conversation_history):
+    conversation_history += f"{text}\n"
+
+    response = openAI.chat_with_DNA(conversation_history, creds.SPEAK_RATE_WPM, returning=True)
+
+    conversation_history += f"{response}\n"
+
+    return conversation_history
+
 def record():
 
     isSaid = False
+
+    conversation_history = ""
 
     r = sr.Recognizer()
 
@@ -15,7 +27,7 @@ def record():
             with sr.Microphone() as source:
                 r.adjust_for_ambient_noise(source, duration=0.5)
                 print("Mr.DNA is Listening!...")
-                audio = r.listen(source, timeout=6)
+                audio = r.listen(source, timeout=10)
                 print("[Done! Speech Recorded]")
         
             text = r.recognize_google(audio)
@@ -27,7 +39,8 @@ def record():
                     isSaid = True 
             print("\nYou: " + text)
             if isSaid != True:
-                openAI.chat_with_DNA(text, creds.SPEAK_RATE_WPM)
+                # openAI.chat_with_DNA(text, creds.SPEAK_RATE_WPM)
+                conversation_history += handle_input(text, conversation_history)
 
         except Exception as e:
             print(e)
