@@ -1,3 +1,3 @@
 import speechToText
 
-speechToText.listenForWakeWord()
+speechToText.listenForWakeWord("text")

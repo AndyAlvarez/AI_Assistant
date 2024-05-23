@@ -47,27 +47,49 @@ def record():
             print("[Reverting to Listening to Wake Word]")
             listenForWakeWord()
 
+def text_chat():
 
-def listenForWakeWord():
+    isSaid = False
+    conversation_history = ""
 
-    r = sr.Recognizer()
-    print("[Listening for Wake Word]")
+    print(f"{creds.ASSISTANT_NAME} is Listening!...")
+
+    while isSaid == False:
+                
+        print("\n\n")
+        print("You:")
+        writtenText = input(f"Say something to {creds.ASSISTANT_NAME}: ")
+        print("\n\n")
+
+        if writtenText != "exit":
+            conversation_history += handle_input(writtenText, conversation_history)
+        else:
+            isSaid = True
     
-    while True:
 
-        with sr.Microphone() as source:
-            print("...")
-            audio = r.listen(source, phrase_time_limit=6, timeout=6)
-            
-        try:
-            wakeWordCheckText = r.recognize_google(audio)
-            print("[Checker:] ", wakeWordCheckText)
-            for word in creds.WAKE_WORDS:
-                if word in wakeWordCheckText:
-                    textToSpeech.say(f"{creds.GREETING}", creds.SPEAK_RATE_WPM) 
-                    print(f"\n[Activated: Wake Word '{wakeWordCheckText}']")
-                    record()
+def listenForWakeWord(chat_type="text"):
 
-        except Exception as e:
-            print(e)
+    if chat_type == "text":
+        text_chat()
+    else:
+        r = sr.Recognizer()
+        print("[Listening for Wake Word]")
+
+        while True:
+
+            with sr.Microphone() as source:
+                print("...")
+                audio = r.listen(source, phrase_time_limit=6, timeout=6)
+                
+            try:
+                wakeWordCheckText = r.recognize_google(audio)
+                print("[Checker:] ", wakeWordCheckText)
+                for word in creds.WAKE_WORDS:
+                    if word in wakeWordCheckText:
+                        textToSpeech.say(f"{creds.GREETING}", creds.SPEAK_RATE_WPM) 
+                        print(f"\n[Activated: Wake Word '{wakeWordCheckText}']")
+                        record()
+
+            except Exception as e:
+                print(e)
             
