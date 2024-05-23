@@ -10,7 +10,7 @@ client = OpenAI(
 
 def chat_with_DNA(prompt, speakRate=200, returning=False, streaming=False):
 
-    ASSISTANT_NAME = "Mr. DNA"
+    ASSISTANT_NAME = creds.ASSISTANT_NAME 
     
     if streaming == True:
 

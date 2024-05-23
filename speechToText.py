@@ -26,7 +26,7 @@ def record():
         try:
             with sr.Microphone() as source:
                 r.adjust_for_ambient_noise(source, duration=0.5)
-                print("Mr.DNA is Listening!...")
+                print(f"{creds.ASSISTANT_NAME} is Listening!...")
                 audio = r.listen(source, timeout=10)
                 print("[Done! Speech Recorded]")
         
@@ -64,7 +64,7 @@ def listenForWakeWord():
             print("[Checker:] ", wakeWordCheckText)
             for word in creds.WAKE_WORDS:
                 if word in wakeWordCheckText:
-                    textToSpeech.say("Hello Explorer!", creds.SPEAK_RATE_WPM)
+                    textToSpeech.say(f"{creds.GREETING}", creds.SPEAK_RATE_WPM) 
                     print(f"\n[Activated: Wake Word '{wakeWordCheckText}']")
                     record()
 
