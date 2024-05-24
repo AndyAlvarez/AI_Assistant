@@ -71,8 +71,7 @@ def text_chat():
     while isSaid == False:
                 
         print("\n\n")
-        print("You:")
-        writtenText = input(f"Say something to {creds.ASSISTANT_NAME}: ")
+        writtenText = input(f"You: ")
         print("\n\n")
 
         if writtenText != "exit":
