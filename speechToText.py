@@ -5,42 +5,27 @@ import openAI
 
 
 def handle_input(text, conversation_history):
-    # Add the new text to the conversation history
+
     conversation_history += f"{text}\n"
     
-    # Check if the conversation history exceeds the maximum length
     if len(conversation_history) > creds.MAX_PROMPT_LENGTH:
-        # Calculate the number of characters to remove
         excess_length = len(conversation_history) - creds.MAX_PROMPT_LENGTH
         
-        # Find the index to trim the conversation history
         trim_index = conversation_history.find('\n', excess_length)
         
-        # Remove the older text
         if trim_index != -1:
             conversation_history = conversation_history[trim_index + 1:]
         else:
-            # In case there's no newline before the excess length, truncate the entire conversation history
             conversation_history = conversation_history[-creds.MAX_PROMPT_LENGTH:]
+
+    response = openAI.chat_with_DNA(conversation_history, returning=True)
     
-    # Call the OpenAI API with the updated conversation history
-    response = openAI.chat_with_DNA(conversation_history, creds.SPEAK_RATE_WPM, returning=True)
-    
-    # Add the response to the conversation history
     conversation_history += f"{response}\n"
 
-    print(f"\n\nConvo History: <<{conversation_history}>>")
+    #print(f"\n\nConvo History: <<{conversation_history}>>")
 
     return conversation_history
 
-# def handle_input(text, conversation_history):
-#     conversation_history += f"{text}\n"
-
-#     response = openAI.chat_with_DNA(conversation_history, creds.SPEAK_RATE_WPM, returning=True)
-
-#     conversation_history += f"{response}\n"
-
-#     return conversation_history
 
 def record():
 
@@ -68,7 +53,7 @@ def record():
                     isSaid = True 
             print("\nYou: " + text)
             if isSaid != True:
-                # openAI.chat_with_DNA(text, creds.SPEAK_RATE_WPM)
+                # openAI.chat_with_DNA(text)
                 conversation_history += handle_input(text, conversation_history)
 
         except Exception as e:

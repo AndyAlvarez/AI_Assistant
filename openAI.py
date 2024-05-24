@@ -9,7 +9,7 @@ client = OpenAI(
 )
 
 
-def chat_with_DNA(prompt, speakRate=200, returning=False, streaming=False):
+def chat_with_DNA(prompt, returning=False, streaming=False):
     
     print(f"\n\n Length of prompt: <<{len(prompt)}>>")
 
@@ -33,7 +33,7 @@ def chat_with_DNA(prompt, speakRate=200, returning=False, streaming=False):
 
 
             if result != "" and creds.CHAT_TYPE != "text":
-                textToSpeech.say(result, speakRate)
+                textToSpeech.say(result, creds.SPEAK_RATE_WPM)
             else: pass
 
         print()
@@ -53,10 +53,10 @@ def chat_with_DNA(prompt, speakRate=200, returning=False, streaming=False):
         if returning == True:
             print(f"{creds.ASSISTANT_NAME}: ", result)
             if creds.CHAT_TYPE != "text":
-                textToSpeech.say(result, speakRate)
+                textToSpeech.say(result, creds.SPEAK_RATE_WPM)
             return result
 
         else:
             print(f"{creds.ASSISTANT_NAME}: ", result)
             if creds.CHAT_TYPE != "text":
-                textToSpeech.say(result, speakRate)
+                textToSpeech.say(result, creds.SPEAK_RATE_WPM)

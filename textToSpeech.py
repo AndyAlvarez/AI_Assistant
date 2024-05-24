@@ -1,7 +1,8 @@
 import pyttsx3
+import creds
 
-def say(text, speakRate_WPM=200):
+def say(text):
     engine = pyttsx3.init()
-    engine.setProperty('rate', speakRate_WPM)
+    engine.setProperty('rate', creds.SPEAK_RATE_WPM)
     engine.say(text) 
     engine.runAndWait()
