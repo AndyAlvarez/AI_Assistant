@@ -1,3 +1,4 @@
 import speechToText
+import creds
 
-speechToText.listenForWakeWord("text")
+speechToText.listenForWakeWord(creds.CHAT_TYPE)

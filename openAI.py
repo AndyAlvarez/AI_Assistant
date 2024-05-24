@@ -2,16 +2,17 @@ import os
 import creds
 import textToSpeech
 from openai import OpenAI
-
+import tiktoken
 
 client = OpenAI(
     api_key=creds.API_KEY
 )
 
-def chat_with_DNA(prompt, speakRate=200, returning=False, streaming=False):
 
-    ASSISTANT_NAME = creds.ASSISTANT_NAME 
+def chat_with_DNA(prompt, speakRate=200, returning=False, streaming=False):
     
+    print(f"\n\n Length of prompt: <<{len(prompt)}>>")
+
     if streaming == True:
 
         stream = client.chat.completions.create(
@@ -28,10 +29,10 @@ def chat_with_DNA(prompt, speakRate=200, returning=False, streaming=False):
         for chunk in stream:
 
             result = chunk.choices[0].delta.content or ""
-            print(f"{ASSISTANT_NAME}: ", result, end="", flush=True)
+            print(f"{creds.ASSISTANT_NAME}: ", result, end="", flush=True)
 
 
-            if result != "":
+            if result != "" and creds.CHAT_TYPE != "text":
                 textToSpeech.say(result, speakRate)
             else: pass
 
@@ -50,10 +51,12 @@ def chat_with_DNA(prompt, speakRate=200, returning=False, streaming=False):
         result = response.choices[0].message.content.strip()
 
         if returning == True:
-            print(f"{ASSISTANT_NAME}: ", result)
-            textToSpeech.say(result, speakRate)
+            print(f"{creds.ASSISTANT_NAME}: ", result)
+            if creds.CHAT_TYPE != "text":
+                textToSpeech.say(result, speakRate)
             return result
 
         else:
-            print(f"{ASSISTANT_NAME}: ", result)
-            textToSpeech.say(result, speakRate)
+            print(f"{creds.ASSISTANT_NAME}: ", result)
+            if creds.CHAT_TYPE != "text":
+                textToSpeech.say(result, speakRate)
