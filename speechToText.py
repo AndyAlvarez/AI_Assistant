@@ -48,7 +48,7 @@ def record():
             print("[Mic Check]: ", text)
             for word in creds.STOP_WORDS:
                 if word == text.lower():
-                    textToSpeech.say("See you later!", creds.SPEAK_RATE_WPM)
+                    textToSpeech.say("See you later!")
                     listenForWakeWord() 
                     isSaid = True 
             print("\nYou: " + text)
@@ -99,7 +99,7 @@ def listenForWakeWord(chat_type="text"):
                 print("[Checker:] ", wakeWordCheckText)
                 for word in creds.WAKE_WORDS:
                     if word in wakeWordCheckText:
-                        textToSpeech.say(f"{creds.GREETING}", creds.SPEAK_RATE_WPM) 
+                        textToSpeech.say(f"{creds.GREETING}") 
                         print(f"\n[Activated: Wake Word '{wakeWordCheckText}']")
                         record()
 
