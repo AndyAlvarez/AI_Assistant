@@ -22,7 +22,7 @@ def chat_with_DNA(prompt, returning=False, streaming=False):
                     "content": prompt,
                 }
             ],
-            model="gpt-3.5-turbo",
+            model=creds.GPT_MODEL,
             stream=True
         )
     
@@ -46,7 +46,7 @@ def chat_with_DNA(prompt, returning=False, streaming=False):
                     "content": prompt,
                 }
             ],
-            model="gpt-3.5-turbo",
+            model=creds.GPT_MODEL,
         )
         result = response.choices[0].message.content.strip()
 
